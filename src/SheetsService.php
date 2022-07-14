@@ -50,9 +50,11 @@ class SheetsService
      * @return void
      */
     public function __construct(
-        SheetsInterface $driver = new \AnourValar\Office\Drivers\PhpSpreadsheetDriver(),
-        \AnourValar\Office\Sheets\Parser $parser = new \AnourValar\Office\Sheets\Parser()
+        SheetsInterface $driver = null,
+        \AnourValar\Office\Sheets\Parser $parser = null
     ) {
+        $driver ??= new \AnourValar\Office\Drivers\PhpSpreadsheetDriver();
+        $parser ??= new \AnourValar\Office\Sheets\Parser();
         $this->driver = $driver;
         $this->parser = $parser;
     }
@@ -65,13 +67,13 @@ class SheetsService
      * @param bool $autoCellFormat
      * @return \AnourValar\Office\Generated
      */
-    public function generate(string $templateFile, mixed $data, bool $autoCellFormat = false): Generated
+    public function generate(string $templateFile, $data, bool $autoCellFormat = false): Generated
     {
         // Handle with input data
         $data = $this->parser->canonizeData($data);
 
         // Open the template
-        $templateFormat = Format::tryFrom(mb_strtolower(pathinfo($templateFile, PATHINFO_EXTENSION))) ?? Format::Xlsx;
+        $templateFormat = Format::tryFrom(mb_strtolower(pathinfo($templateFile, PATHINFO_EXTENSION))) ?? new Format(Format::Xlsx);
 
         if ($this->hookLoad) {
             $driver = ($this->hookLoad)($this->driver, $templateFile, $templateFormat);

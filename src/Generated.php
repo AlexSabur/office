@@ -6,8 +6,9 @@ class Generated
 {
     /**
      * @var \AnourValar\Office\Drivers\SaveInterface
+     * @readonly
      */
-    public readonly \AnourValar\Office\Drivers\SaveInterface $driver;
+    public \AnourValar\Office\Drivers\SaveInterface $driver;
 
     /**
      * Handle template's saving

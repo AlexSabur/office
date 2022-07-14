@@ -25,8 +25,9 @@ class PhpSpreadsheetDriver implements SheetsInterface, GridInterface, MixInterfa
 
     /**
      * @var \PhpOffice\PhpSpreadsheet\Spreadsheet
+     * @readonly
      */
-    public readonly \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet;
+    public \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet;
 
     /**
      * @var int
@@ -474,12 +475,17 @@ class PhpSpreadsheetDriver implements SheetsInterface, GridInterface, MixInterfa
         }
 
         if (isset($style['align'])) {
-            $align = match($style['align'])
-            {
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT => 'left',
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER => 'center',
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT => 'right',
-            };
+            switch ($style['align']) {
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT:
+                    $align = 'left';
+                    break;
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER:
+                    $align = 'center';
+                    break;
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT:
+                    $align = 'right';
+                    break;
+            }
 
             $this
                 ->sheet()
@@ -488,12 +494,17 @@ class PhpSpreadsheetDriver implements SheetsInterface, GridInterface, MixInterfa
         }
 
         if (isset($style['valign'])) {
-            $valign = match($style['valign'])
-            {
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP => 'top',
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER => 'center',
-                \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_BOTTOM => 'bottom',
-            };
+            switch ($style['valign']) {
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP:
+                    $valign = 'top';
+                    break;
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER:
+                    $valign = 'center';
+                    break;
+                case \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_BOTTOM:
+                    $valign = 'bottom';
+                    break;
+            }
 
             $this
                 ->sheet()
@@ -557,11 +568,15 @@ class PhpSpreadsheetDriver implements SheetsInterface, GridInterface, MixInterfa
      */
     protected function getFormat(\AnourValar\Office\Format $format): string
     {
-        return match($format) {
-            \AnourValar\Office\Format::Xlsx => 'Xlsx',
-            \AnourValar\Office\Format::Pdf => 'Mpdf',
-            \AnourValar\Office\Format::Html => 'Html',
-            \AnourValar\Office\Format::Ods => 'Ods',
-        };
+        switch ($format->getFormat()) {
+            case \AnourValar\Office\Format::Xlsx:
+                return 'Xlsx';
+            case \AnourValar\Office\Format::Pdf:
+                return 'Mpdf';
+            case \AnourValar\Office\Format::Html:
+                return 'Html';
+            case \AnourValar\Office\Format::Ods:
+                return 'Ods';
+        }
     }
 }

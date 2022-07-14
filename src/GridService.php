@@ -43,8 +43,9 @@ class GridService
      * @param \AnourValar\Office\Drivers\GridInterface $driver
      * @return void
      */
-    public function __construct(GridInterface $driver = new \AnourValar\Office\Drivers\PhpSpreadsheetDriver())
+    public function __construct(GridInterface $driver = null)
     {
+        $driver ??= new \AnourValar\Office\Drivers\PhpSpreadsheetDriver();
         $this->driver = $driver;
     }
 
@@ -56,7 +57,7 @@ class GridService
      * @param string $leftTopCorner
      * @return \AnourValar\Office\Generated
      */
-    public function generate(array $headers, iterable|\Closure $data, string $leftTopCorner = 'A1'): Generated
+    public function generate(array $headers, $data, string $leftTopCorner = 'A1'): Generated
     {
         // Handle with data
         if ($data instanceof \Closure) {

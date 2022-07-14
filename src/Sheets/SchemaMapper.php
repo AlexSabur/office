@@ -45,7 +45,7 @@ class SchemaMapper
      * @param mixed $value
      * @return self
      */
-    public function addData(int $row, string $column, mixed $value): self
+    public function addData(int $row, string $column, $value): self
     {
         $this->payload['data'][$row][$column] = $value;
 

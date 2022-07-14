@@ -1,8 +1,25 @@
+# ⚠️⚠️⚠️ FORK FOR PHP 7.4 ⚠️⚠️⚠️
+
 # Office: Documents | Reports | Grids
 
 ## Installation
 
 ### Minimal
+
+composer
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/AlexSabur/office"
+        }
+    ],
+    "require": {
+        "anourvalar/office": "dev-php74"
+    }
+}
+```
 
 ```bash
 composer require anourvalar/office

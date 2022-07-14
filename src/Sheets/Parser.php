@@ -10,7 +10,7 @@ class Parser
      * @param mixed $data
      * @return array
      */
-    public function canonizeData(mixed $data): array
+    public function canonizeData($data): array
     {
         if (is_object($data) && method_exists($data, 'toArray')) {
             $data = $data->toArray();
@@ -566,7 +566,7 @@ class Parser
             return true;
         }
 
-        if (! str_ends_with($path, '.')) {
+        if (substr_compare($path, '.', -strlen('.')) !== 0) {
             $path .= '.';
         }
 
@@ -739,7 +739,7 @@ class Parser
      * @throws \LogicException
      * @return mixed
      */
-    private function replace(string $from, mixed $to, $value): mixed
+    private function replace(string $from, $to, $value)
     {
         if (! is_string($value)) {
             return $value;
